@@ -1,0 +1,12 @@
+# security/trivy-scan.yaml
+name: Security Scan
+on: [push]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'lokeshkchrl/my-flask-app'

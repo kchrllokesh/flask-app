@@ -1,0 +1,27 @@
+// jenkins/Jenkinsfile
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/kchrllokesh/flask-app.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("lokeshkchrl/my-flask-app")
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        docker.image("lokeshkchrl/my-flask-app").push()
+                    }
+                }
+            }
+        }
+    }
+}
